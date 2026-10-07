@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 560" width="1240" height="560"
+     font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Hiragino Sans GB, sans-serif">
+<style>
+  .h  { font-size:27px; font-weight:700; fill:#0D47A1 }
+  .sb { font-size:15.5px; fill:#7A8FA3 }
+  .pt { font-size:15px; font-weight:700; fill:#0D47A1 }
+  .ps { font-size:12.5px; fill:#7A8FA3 }
+  .kv { font-size:13px; fill:#1A2A3A }
+</style>
+
+<rect width="1240" height="560" fill="#FFFFFF"/>
+
+<text x="40" y="48" class="h">為什麼保留 P2：遠距號誌在畫面中只有 16 像素</text>
+<text x="40" y="79" class="sb">目標尺寸決定它能落在幾個格點上。格點太少，偵測頭就沒有足夠的空間資訊可用。</text>
+<line x1="40" y1="97" x2="1200" y2="97" stroke="#D6E4F0" stroke-width="1.5"/>
+
+<!-- 左：步幅 8 -->
+<rect x="40" y="120" width="560" height="372" rx="10" fill="#FFFFFF" stroke="#D6E4F0" stroke-width="1.5"/>
+<rect x="68" y="146" width="170" height="28" rx="4" fill="#F2F6FA"/>
+<text x="82" y="165" font-size="14.5" font-weight="700" fill="#7A8FA3">步幅 8 · 自 P3 起始</text>
+
+<g transform="translate(96 198)">
+  <rect width="320" height="256" fill="#F7FAFD"/>
+  <g stroke="#CDE0F2" stroke-width="1">
+    <line x1="64"  y1="0" x2="64"  y2="256"/><line x1="128" y1="0" x2="128" y2="256"/>
+    <line x1="192" y1="0" x2="192" y2="256"/><line x1="256" y1="0" x2="256" y2="256"/>
+    <line x1="0" y1="64"  x2="320" y2="64"/> <line x1="0" y1="128" x2="320" y2="128"/>
+    <line x1="0" y1="192" x2="320" y2="192"/>
+  </g>
+  <rect width="320" height="256" fill="none" stroke="#CFE3F5" stroke-width="1.5"/>
+  <rect x="64" y="64" width="128" height="128" fill="#90CAF9" fill-opacity="0.22" stroke="#90CAF9" stroke-width="2.5"/>
+  <rect x="104" y="80" width="48" height="96" rx="6" fill="#FFFFFF" stroke="#7A8FA3" stroke-width="1.5"/>
+  <circle cx="128" cy="100" r="11" fill="#CBD6E0"/>
+  <circle cx="128" cy="128" r="11" fill="#CBD6E0"/>
+  <circle cx="128" cy="156" r="11" fill="#90CAF9"/>
+  <text x="128" y="50" font-size="12.5" font-weight="700" fill="#5E95C8" text-anchor="middle">16 px 號誌</text>
+</g>
+
+<rect x="96" y="474" width="320" height="0" fill="none"/>
+<text x="440" y="236" class="kv">格點解析度</text>
+<text x="440" y="258" font-size="22" font-weight="700" fill="#7A8FA3">2 × 2</text>
+<text x="440" y="300" class="kv">定位量化誤差</text>
+<text x="440" y="322" font-size="22" font-weight="700" fill="#7A8FA3">± 4 px</text>
+<rect x="440" y="352" width="136" height="3" fill="#E6EEF6"/>
+<text x="440" y="388" class="ps">目標僅橫跨約 2 個格點，</text>
+<text x="440" y="408" class="ps">邊界與中心幾乎落在同一格，</text>
+<text x="440" y="428" class="ps">遠距小目標容易整個漏檢。</text>
+
+<!-- 右：步幅 4 -->
+<rect x="640" y="120" width="560" height="372" rx="10" fill="#FFFFFF" stroke="#90CAF9" stroke-width="1.8"/>
+<rect x="668" y="146" width="170" height="28" rx="4" fill="#E3F2FD"/>
+<text x="682" y="165" font-size="14.5" font-weight="700" fill="#0D47A1">步幅 4 · 保留 P2</text>
+
+<g transform="translate(696 198)">
+  <rect width="320" height="256" fill="#F7FAFD"/>
+  <g stroke="#CDE0F2" stroke-width="1">
+    <line x1="32" y1="0" x2="32" y2="256"/>
+    <line x1="64" y1="0" x2="64" y2="256"/>
+    <line x1="96" y1="0" x2="96" y2="256"/>
+    <line x1="128" y1="0" x2="128" y2="256"/>
+    <line x1="160" y1="0" x2="160" y2="256"/>
+    <line x1="192" y1="0" x2="192" y2="256"/>
+    <line x1="224" y1="0" x2="224" y2="256"/>
+    <line x1="256" y1="0" x2="256" y2="256"/>
+    <line x1="288" y1="0" x2="288" y2="256"/>
+    <line x1="0" y1="32" x2="320" y2="32"/>
+    <line x1="0" y1="64" x2="320" y2="64"/>
+    <line x1="0" y1="96" x2="320" y2="96"/>
+    <line x1="0" y1="128" x2="320" y2="128"/>
+    <line x1="0" y1="160" x2="320" y2="160"/>
+    <line x1="0" y1="192" x2="320" y2="192"/>
+    <line x1="0" y1="224" x2="320" y2="224"/>
+  </g>
+  <rect width="320" height="256" fill="none" stroke="#CFE3F5" stroke-width="1.5"/>
+  <rect x="64" y="64" width="128" height="128" fill="#2196F3" fill-opacity="0.16" stroke="#2196F3" stroke-width="2.8"/>
+  <rect x="104" y="80" width="48" height="96" rx="6" fill="#FFFFFF" stroke="#0D47A1" stroke-width="1.5"/>
+  <circle cx="128" cy="100" r="11" fill="#CFE3F5"/>
+  <circle cx="128" cy="128" r="11" fill="#CFE3F5"/>
+  <circle cx="128" cy="156" r="11" fill="#2196F3"/>
+  <text x="128" y="50" font-size="12.5" font-weight="700" fill="#0D47A1" text-anchor="middle">16 px 號誌</text>
+</g>
+
+<text x="1040" y="236" class="kv">格點解析度</text>
+<text x="1040" y="258" font-size="22" font-weight="700" fill="#2196F3">4 × 4</text>
+<text x="1040" y="300" class="kv">定位量化誤差</text>
+<text x="1040" y="322" font-size="22" font-weight="700" fill="#2196F3">± 2 px</text>
+<rect x="1040" y="352" width="136" height="3" fill="#90CAF9"/>
+<text x="1040" y="388" class="ps">格點數提升為四倍，</text>
+<text x="1040" y="408" class="ps">邊界與中心可分離，</text>
+<text x="1040" y="428" class="ps">小目標的召回率明顯改善。</text>
+
+<!-- 底部代價 -->
+<rect x="40" y="512" width="1160" height="40" rx="6" fill="#E3F2FD"/>
+<text x="64" y="537" font-size="13" font-weight="700" fill="#0D47A1">代價</text>
+<text x="112" y="537" font-size="13" fill="#2F6FC4">P2 的特徵圖是 P3 的四倍大，運算量與記憶體同步上升。因此必須同時壓縮通道數與偵測頭成本，才守得住約 20 萬參數的預算。</text>
+</svg>

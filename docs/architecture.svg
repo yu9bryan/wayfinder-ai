@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 570" width="1240" height="570"
+     font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Hiragino Sans GB, sans-serif">
+<defs>
+  <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#90CAF9"/></marker>
+</defs>
+<style>
+  .h    { font-size:27px; font-weight:700; fill:#0D47A1 }
+  .sb   { font-size:15.5px; fill:#7A8FA3 }
+  .colh { font-size:12px; font-weight:700; fill:#5E95C8; letter-spacing:1.4px }
+  .ct   { font-size:13.5px; font-weight:700; fill:#1A2A3A }
+  .cs   { font-size:11.5px; fill:#7A8FA3 }
+</style>
+
+<rect width="1240" height="570" fill="#FFFFFF"/>
+
+<text x="40" y="48" class="h">系統架構</text>
+<text x="40" y="79" class="sb">語言模型只做理解，輸出受 Schema 約束。是否執行、是否降級，由安全狀態機決定。</text>
+<line x1="40" y1="97" x2="1200" y2="97" stroke="#D6E4F0" stroke-width="1.5"/>
+
+<!-- 欄標題 -->
+<text x="40"   y="130" class="colh">感知輸入</text>
+<text x="240"  y="130" class="colh">感知層 · 觀測</text>
+<text x="510"  y="130" class="colh">語意與融合</text>
+<text x="780"  y="130" class="colh">決策層 · 唯一治理點</text>
+<text x="1020" y="130" class="colh">輸出</text>
+<line x1="40"   y1="142" x2="200"  y2="142" stroke="#E6EEF6" stroke-width="2"/>
+<line x1="240"  y1="142" x2="470"  y2="142" stroke="#E6EEF6" stroke-width="2"/>
+<line x1="510"  y1="142" x2="740"  y2="142" stroke="#E6EEF6" stroke-width="2"/>
+<line x1="780"  y1="142" x2="980"  y2="142" stroke="#90CAF9" stroke-width="2"/>
+<line x1="1020" y1="142" x2="1200" y2="142" stroke="#E6EEF6" stroke-width="2"/>
+
+<!-- 欄 1：感知輸入 -->
+<g>
+  <rect x="40" y="170" width="160" height="52" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="40" y="170" width="3" height="52" rx="1.5" fill="#CFE3F5"/>
+  <text x="56" y="194" class="ct">相機</text>
+  <text x="56" y="212" class="cs">RGB 連續影像</text>
+
+  <rect x="40" y="238" width="160" height="52" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="40" y="238" width="3" height="52" rx="1.5" fill="#CFE3F5"/>
+  <text x="56" y="262" class="ct">麥克風</text>
+  <text x="56" y="280" class="cs">母語語音輸入</text>
+
+  <rect x="40" y="306" width="160" height="52" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="40" y="306" width="3" height="52" rx="1.5" fill="#CFE3F5"/>
+  <text x="56" y="330" class="ct">深度感測</text>
+  <text x="56" y="348" class="cs">LiDAR · ToF（選配）</text>
+</g>
+
+<!-- 欄 2：感知層 -->
+<g>
+  <rect x="240" y="160" width="230" height="62" rx="6" fill="#F5FAFE" stroke="#90CAF9"/>
+  <rect x="240" y="160" width="3" height="62" rx="1.5" fill="#2196F3"/>
+  <text x="258" y="184" class="ct">OBB 旋轉框偵測</text>
+  <text x="258" y="202" class="cs">斑馬線漆線 · 號誌</text>
+  <text x="258" y="216" class="cs">自訓練 · 約 20 萬參數 · 保留 P2</text>
+
+  <rect x="240" y="236" width="230" height="62" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="240" y="236" width="3" height="62" rx="1.5" fill="#90CAF9"/>
+  <text x="258" y="260" class="ct">ASR 語音辨識</text>
+  <text x="258" y="278" class="cs">國 · 台 · 客語</text>
+  <text x="258" y="292" class="cs">短指令場景 LoRA 微調</text>
+
+  <rect x="240" y="312" width="230" height="62" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="240" y="312" width="3" height="62" rx="1.5" fill="#90CAF9"/>
+  <text x="258" y="336" class="ct">OCR 文字識讀</text>
+  <text x="258" y="354" class="cs">站牌 · 門牌 · 包裝標示</text>
+  <text x="258" y="368" class="cs">低信心時回報「看不清楚」</text>
+
+  <rect x="240" y="388" width="230" height="62" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="240" y="388" width="3" height="62" rx="1.5" fill="#90CAF9"/>
+  <text x="258" y="412" class="ct">通用物件偵測</text>
+  <text x="258" y="430" class="cs">Vision · Core ML</text>
+  <text x="258" y="444" class="cs">個人化物品以特徵庫比對</text>
+</g>
+
+<!-- 欄 3：語意與融合 -->
+<g>
+  <rect x="510" y="170" width="230" height="78" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="510" y="170" width="3" height="78" rx="1.5" fill="#2196F3"/>
+  <text x="528" y="194" class="ct">意圖路由</text>
+  <text x="528" y="214" class="cs">受 JSON Schema 約束的結構化輸出</text>
+  <text x="528" y="230" class="cs">僅執行預先定義的白名單工具</text>
+  <text x="528" y="243" class="cs">不產生自由文字</text>
+
+  <rect x="510" y="264" width="230" height="78" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="510" y="264" width="3" height="78" rx="1.5" fill="#2196F3"/>
+  <text x="528" y="288" class="ct">角度融合</text>
+  <text x="528" y="308" class="cs">軸向循環平均</text>
+  <text x="528" y="324" class="cs">時間中位數 · 五幀三票</text>
+  <text x="528" y="337" class="cs">抑制單幀誤差，保留不確定性</text>
+
+  <rect x="510" y="358" width="230" height="78" rx="6" fill="#FFFFFF" stroke="#D6E4F0"/>
+  <rect x="510" y="358" width="3" height="78" rx="1.5" fill="#2196F3"/>
+  <text x="528" y="382" class="ct">空間錨定</text>
+  <text x="528" y="402" class="cs">ARKit 三維世界座標</text>
+  <text x="528" y="418" class="cs">只保存座標與信心</text>
+  <text x="528" y="431" class="cs">逾時、漂移或任務結束即銷毀</text>
+</g>
+
+<!-- 欄 4：決策層 -->
+<rect x="780" y="200" width="200" height="210" rx="8" fill="#0D47A1"/>
+<text x="880" y="248" font-size="17" font-weight="700" fill="#FFFFFF" text-anchor="middle">安全狀態機</text>
+<line x1="812" y1="266" x2="948" y2="266" stroke="#2F6FC4" stroke-width="1.5"/>
+<text x="880" y="294" font-size="12.5" fill="#BBDEFB" text-anchor="middle">綜合跨模組信心</text>
+<text x="880" y="316" font-size="12.5" fill="#BBDEFB" text-anchor="middle">決定輸出或降級</text>
+<text x="880" y="338" font-size="12.5" fill="#BBDEFB" text-anchor="middle">過熱 · 記憶體不足</text>
+<text x="880" y="356" font-size="12.5" fill="#BBDEFB" text-anchor="middle">延遲超限則關閉非必要功能</text>
+<rect x="812" y="372" width="136" height="24" rx="4" fill="#2F6FC4"/>
+<text x="880" y="389" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">非生成式 · 規則定義</text>
+<text x="880" y="432" font-size="12" font-weight="700" fill="#0D47A1" text-anchor="middle">生成式模型不進入此層</text>
+
+<!-- 欄 5：輸出 -->
+<g>
+  <rect x="1020" y="180" width="180" height="58" rx="6" fill="#E3F2FD" stroke="#90CAF9"/>
+  <text x="1038" y="204" class="ct">語音提示</text>
+  <text x="1038" y="224" class="cs">先說行動，再說原因</text>
+
+  <rect x="1020" y="254" width="180" height="58" rx="6" fill="#E3F2FD" stroke="#90CAF9"/>
+  <text x="1038" y="278" class="ct">觸覺回饋</text>
+  <text x="1038" y="298" class="cs">標準化震動語彙</text>
+
+  <rect x="1020" y="328" width="180" height="58" rx="6" fill="#FFFFFF" stroke="#90CAF9" stroke-dasharray="5 4"/>
+  <text x="1038" y="352" class="ct">降級或拒絕</text>
+  <text x="1038" y="372" class="cs">不臆測、不強迫選擇</text>
+</g>
+
+<!-- 箭頭 -->
+<g stroke="#90CAF9" stroke-width="2.2" marker-end="url(#ar)">
+  <line x1="206" y1="300" x2="232" y2="300"/>
+  <line x1="476" y1="300" x2="502" y2="300"/>
+  <line x1="746" y1="300" x2="772" y2="300"/>
+  <line x1="986" y1="300" x2="1012" y2="300"/>
+</g>
+
+<!-- 底部邊界 -->
+<rect x="40" y="486" width="1160" height="48" rx="6" fill="#E3F2FD"/>
+<text x="620" y="508" font-size="13.5" font-weight="700" fill="#0D47A1" text-anchor="middle">資料邊界</text>
+<text x="620" y="526" font-size="12.5" fill="#2F6FC4" text-anchor="middle">全程於裝置端執行。正式流程不呼叫外部雲端 API，影像僅存於記憶體推論，任務結束即釋放</text>
+</svg>

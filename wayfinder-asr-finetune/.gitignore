@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+out/
+runs/
+wandb/
+*.log
+.DS_Store
+.ipynb_checkpoints/
+
+# 語料不入庫（受試者同意範圍限制）
+sample_corpus/
+clips/
+*.wav
+*.m4a
+consent/

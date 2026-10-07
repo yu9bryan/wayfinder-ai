@@ -1,0 +1,16 @@
+# 鎖定版本
+# PyTorch 請依 CUDA 版本另行安裝，例如：
+#   pip install torch==2.6.0 torchaudio --index-url https://download.pytorch.org/whl/cu124
+torch==2.6.0
+transformers==4.57.6
+datasets==3.6.0
+accelerate==1.15.0
+peft==0.21.2
+huggingface_hub==0.36.2
+jiwer==4.0.0
+librosa==0.11.0
+soundfile==0.14.0
+pandas==3.0.6
+numpy==2.4.6
+opencc-python-reimplemented==0.1.7
+tensorboard==2.21.0

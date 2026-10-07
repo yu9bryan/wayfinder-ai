@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env
+runs/
+wandb/
+*.log
+.DS_Store
+.ipynb_checkpoints/
+
+# 訓練資料不入庫（授權與隱私）
+datasets/
+data/

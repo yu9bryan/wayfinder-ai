@@ -1,0 +1,8 @@
+# 行人號誌資料集（Ultralytics detect 格式）。資料集未隨倉庫釋出，請依 docs/annotation_spec.md 自行準備。
+path: datasets/traffic_light
+train: train/images
+val: valid/images
+test: test/images
+names:
+  0: Green_Light
+  1: Red_Light

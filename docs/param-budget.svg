@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 460" width="1240" height="460"
+     font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Hiragino Sans GB, sans-serif">
+<style>
+  .h  { font-size:27px; font-weight:700; fill:#0D47A1 }
+  .sb { font-size:15.5px; fill:#7A8FA3 }
+  .lb { font-size:14px; font-weight:700; fill:#1A2A3A }
+  .ls { font-size:11.5px; fill:#7A8FA3 }
+</style>
+
+<rect width="1240" height="460" fill="#FFFFFF"/>
+
+<text x="40" y="48" class="h">參數預算的分配</text>
+<text x="40" y="79" class="sb">在固定約 20 萬參數的預算下，偵測頭的設計方式決定骨幹還剩多少容量。</text>
+<line x1="40" y1="97" x2="1200" y2="97" stroke="#D6E4F0" stroke-width="1.5"/>
+
+<!-- 刻度：長條自 x=240 起、寬 960 -->
+<g stroke="#EEF3F8" stroke-width="1">
+  <line x1="480"  y1="142" x2="480"  y2="336"/>
+  <line x1="720"  y1="142" x2="720"  y2="336"/>
+  <line x1="960"  y1="142" x2="960"  y2="336"/>
+  <line x1="1200" y1="142" x2="1200" y2="336"/>
+</g>
+<g font-size="11" fill="#9AADBF" text-anchor="middle">
+  <text x="480" y="134">25%</text><text x="720" y="134">50%</text>
+  <text x="960" y="134">75%</text><text x="1196" y="134">100%</text>
+</g>
+
+<!-- 列 1 -->
+<text x="40" y="178" class="lb">原生偵測頭寬度公式</text>
+<text x="40" y="198" class="ls">頭部寬度與 reg_max 綁定 · 186,402 參數</text>
+<rect x="240" y="162" width="154" height="56" rx="3" fill="#0D47A1"/>
+<rect x="394" y="162" width="806" height="56" rx="3" fill="#90CAF9"/>
+<text x="317" y="196" font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">16.0%</text>
+<text x="797" y="188" font-size="16" font-weight="700" fill="#0D47A1" text-anchor="middle">頭部 84.0%</text>
+<text x="797" y="208" font-size="11.5" fill="#1B5FA8" text-anchor="middle">容量幾乎全部耗在偵測頭</text>
+
+<!-- 列 2 -->
+<text x="40" y="282" class="lb">解耦寬度 ＋ DSConv</text>
+<text x="40" y="302" class="ls">頭部中段寬度與 reg_max 分離 · 203,570 參數</text>
+<rect x="240" y="266" width="880" height="56" rx="3" fill="#0D47A1"/>
+<rect x="1120" y="266" width="80" height="56" rx="3" fill="#90CAF9"/>
+<text x="680" y="292" font-size="16" font-weight="700" fill="#FFFFFF" text-anchor="middle">骨幹與頸部 91.7%</text>
+<text x="680" y="312" font-size="11.5" fill="#A9CEF2" text-anchor="middle">省下的容量全部回配給特徵擷取</text>
+<text x="1160" y="299" font-size="13" font-weight="700" fill="#0D47A1" text-anchor="middle">8.3%</text>
+
+<!-- 圖例 -->
+<g font-size="12" fill="#7A8FA3">
+  <rect x="240" y="346" width="12" height="12" rx="2" fill="#0D47A1"/>
+  <text x="260" y="356">骨幹與頸部</text>
+  <rect x="360" y="346" width="12" height="12" rx="2" fill="#90CAF9"/>
+  <text x="380" y="356">偵測頭</text>
+</g>
+
+<!-- 註腳 -->
+<rect x="40" y="384" width="560" height="56" rx="6" fill="#E3F2FD"/>
+<text x="64" y="408" font-size="12.5" font-weight="700" fill="#0D47A1">深度可分離卷積的理論參數比</text>
+<text x="64" y="430" font-size="14" fill="#2F6FC4" font-family="Consolas, Menlo, monospace">1 / N  +  1 / K²　（N：輸出通道數　K：卷積核邊長）</text>
+
+<rect x="640" y="384" width="560" height="56" rx="6" fill="#F7FAFD" stroke="#D6E4F0"/>
+<text x="664" y="408" font-size="12.5" font-weight="700" fill="#0D47A1">部署檔</text>
+<text x="664" y="430" font-size="14" fill="#2F6FC4">FP16 TFLite 646 KiB。權重已公開，可直接驗算</text>
+</svg>

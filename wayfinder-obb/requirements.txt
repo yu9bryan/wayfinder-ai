@@ -1,0 +1,17 @@
+# 鎖定版本：head patch 依賴 Ultralytics 內部類別，版本不同可能載不起權重
+# PyTorch 請依 CUDA 版本另行安裝，例如：
+#   pip install torch==2.11.0 torchvision==0.26.0 --index-url https://download.pytorch.org/whl/cu128
+ultralytics==8.4.38
+torch==2.11.0
+torchvision==0.26.0
+opencv-python==4.11.0.86
+onnx==1.20.1
+onnxruntime==1.30.0
+onnxslim==0.1.91
+numpy==1.26.4
+pyyaml==6.0.3
+pillow==12.2.0
+
+# 只有重新匯出 TFLite 時需要
+# tensorflow==2.19.1
+# onnx2tf==1.28.8

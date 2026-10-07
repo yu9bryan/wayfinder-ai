@@ -1,0 +1,3 @@
+file,bytes,sha256
+adapter/adapter_config.json,1297,2cf214fd85b41cf1e6f7ebf0c1e48a9b5f083ba6f049d5567a517a004ac2eac3
+adapter/adapter_model.safetensors,31512224,e6ebad786874f2bcc78a06c77ab4d68cb1729fe6632f6d4fe965e2305ad6fe16

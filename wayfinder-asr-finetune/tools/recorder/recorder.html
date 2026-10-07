@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Wayfinder 錄音</title>
+<style>
+  :root {
+    --bg: #f6f6f3; --panel: #ffffff; --ink: #1d1d1b; --muted: #6b6b66; --line: #e3e2dc;
+    --accent: #1f6feb; --rec: #d1242f; --ok: #1a7f37; --warn: #9a6700;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #161615; --panel: #1f1f1d; --ink: #ecebe6; --muted: #9b9a93; --line: #34332f;
+            --accent: #4c8dff; --rec: #ff5a5f; --ok: #3fb950; --warn: #d29922; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink);
+         font: 16px/1.5 "Noto Sans TC", "Microsoft JhengHei", system-ui, sans-serif; }
+  .wrap { max-width: 860px; margin: 0 auto; padding: 20px 16px 48px; }
+  header { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin-bottom: 16px; }
+  header h1 { font-size: 18px; margin: 0 auto 0 0; }
+  label { font-size: 13px; color: var(--muted); display: grid; gap: 4px; }
+  input, select, button { font: inherit; color: inherit; }
+  input[type=text], select { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 6px 10px; }
+  #spk { width: 90px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 24px; }
+  .meta { display: flex; justify-content: space-between; color: var(--muted); font-size: 14px; }
+  .sentence { font-size: clamp(32px, 7vw, 56px); font-weight: 600; text-align: center; margin: 36px 0 28px; letter-spacing: .04em; word-break: break-all; }
+  .cat { display: inline-block; font-size: 12px; padding: 2px 8px; border-radius: 99px; border: 1px solid var(--line); }
+  .meter { height: 10px; background: var(--line); border-radius: 99px; overflow: hidden; margin: 0 0 20px; }
+  .meter > div { height: 100%; width: 0; background: var(--ok); transition: width .05s linear; }
+  .controls { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+  button { border: 1px solid var(--line); background: var(--panel); border-radius: 10px; padding: 10px 18px; cursor: pointer; }
+  button:disabled { opacity: .4; cursor: default; }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+  button.rec { background: var(--rec); border-color: var(--rec); color: #fff; min-width: 160px; }
+  button.rec.on { animation: pulse 1s infinite; }
+  @keyframes pulse { 50% { opacity: .65; } }
+  .status { min-height: 24px; text-align: center; margin-top: 16px; font-size: 14px; }
+  .status.ok { color: var(--ok); } .status.warn { color: var(--warn); } .status.err { color: var(--rec); }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(44px, 1fr)); gap: 6px; margin-top: 20px; }
+  .grid button { padding: 6px 0; font-size: 13px; border-radius: 8px; }
+  .grid button.done { background: color-mix(in srgb, var(--ok) 18%, var(--panel)); border-color: var(--ok); }
+  .grid button.cur { outline: 2px solid var(--accent); }
+  .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 20px; }
+  .hint { color: var(--muted); font-size: 13px; }
+  kbd { border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; font-size: 12px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Wayfinder 語料錄音</h1>
+    <label>說話者代號<input id="spk" type="text" value="spk09" pattern="spk\d\d"></label>
+    <label>環境
+      <select id="env">
+        <option value="">安靜室內</option>
+        <option value="_road">路口實景</option>
+        <option value="_noisy">室內吵雜</option>
+      </select>
+    </label>
+    <label>句子來源
+      <select id="src"><option value="test">測試集 40 句</option><option value="file">載入 TSV…</option></select>
+    </label>
+    <input id="tsv" type="file" accept=".tsv,.txt" hidden>
+  </header>
+
+  <div class="card">
+    <div class="meta"><span id="pos">–</span><span class="cat" id="cat">–</span></div>
+    <div class="sentence" id="sent">按「選擇儲存資料夾」開始</div>
+    <div class="meter"><div id="lvl"></div></div>
+    <div class="controls">
+      <button id="prev">← 上一句</button>
+      <button id="rec" class="rec" disabled>● 錄音（空白鍵）</button>
+      <button id="play" disabled>▶ 重聽</button>
+      <button id="next" class="primary" disabled>下一句 →</button>
+    </div>
+    <div class="status" id="status"></div>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <div class="row">
+    <button id="dir" class="primary">選擇儲存資料夾</button>
+    <span class="hint" id="dirinfo">檔案會存成 <code>&lt;資料夾&gt;/spk09/001.wav</code> 與 <code>spk09.tsv</code>（16 kHz 單聲道 WAV）</span>
+  </div>
+  <p class="hint">
+    快捷鍵：<kbd>空白</kbd> 開始／停止錄音、<kbd>→</kbd> 下一句、<kbd>←</kbd> 上一句、<kbd>P</kbd> 重聽。
+    手機離嘴 20–30 公分，用平常跟手機講話的語氣。念錯就重錄，錄好的檔會直接覆蓋。
+    瀏覽器不支援選資料夾時（Safari、Firefox），會改成逐檔下載。
+  </p>
+</div>
+
+<script>
+const TEST = [
+  ["A","現在是紅燈還是綠燈"],["A","現在可以過嗎"],["A","對面是綠燈嗎"],["A","我有沒有走歪"],["A","還要等多久"],["A","紅燈還要等多久"],
+  ["對立詞","現在是紅燈嗎"],["對立詞","現在是綠燈嗎"],["對立詞","往左邊走"],["對立詞","往右邊走"],["對立詞","前面有車嗎"],["對立詞","後面有車嗎"],
+  ["對立詞","現在可以過馬路嗎"],["對立詞","現在不可以過馬路嗎"],["對立詞","開始導航"],["對立詞","停止導航"],
+  ["尋物","幫我找黑色的保溫杯"],["尋物","幫我找白色的雨傘"],["尋物","我的鑰匙在哪裡"],["尋物","附近有椅子嗎"],["尋物","前面有沒有樓梯"],["尋物","桌上有什麼東西"],["尋物","我的手機掉到哪裡了"],
+  ["登錄","我要登錄一個新物品"],["登錄","這個叫做我的眼鏡"],["登錄","刪掉我的錢包"],
+  ["識讀","念這張站牌"],["識讀","這上面寫什麼"],["識讀","這是幾號公車"],["識讀","這是三百零七號公車嗎"],
+  ["記憶","記住這個位置"],["記憶","我剛剛放在哪裡"],["記憶","帶我回到剛才的位置"],
+  ["控制","停止"],["控制","取消"],["控制","再說一次"],["控制","大聲一點"],["控制","慢一點"],
+  ["非指令","今天天氣真好"],["非指令","喂你在哪"],
+].map(([cat, text], i) => ({ no: i + 1, cat, text }));
+
+const $ = id => document.getElementById(id);
+let items = TEST, idx = 0, dirHandle = null, stream = null, recorder = null, chunks = [];
+let analyser = null, raf = 0;
+const takes = {};   // no -> {blob(wav), url}
+
+const fname = it => `${String(it.no).padStart(3, "0")}${$("env").value}.wav`;
+const spk = () => $("spk").value.trim() || "spk09";
+
+function status(msg, cls = "") { const s = $("status"); s.textContent = msg; s.className = "status " + cls; }
+
+function render() {
+  const it = items[idx];
+  $("pos").textContent = `第 ${idx + 1} / ${items.length} 句　·　${spk()}/${fname(it)}`;
+  $("cat").textContent = it.cat || "–";
+  $("sent").textContent = it.text;
+  $("play").disabled = !takes[key(it)];
+  $("prev").disabled = idx === 0;
+  $("next").disabled = idx >= items.length - 1;
+  const g = $("grid"); g.innerHTML = "";
+  items.forEach((x, i) => {
+    const b = document.createElement("button");
+    b.textContent = x.no;
+    if (takes[key(x)]) b.classList.add("done");
+    if (i === idx) b.classList.add("cur");
+    b.onclick = () => { if (!recording()) { idx = i; render(); status(""); } };
+    g.appendChild(b);
+  });
+}
+const key = it => `${spk()}/${fname(it)}`;
+const recording = () => recorder && recorder.state === "recording";
+
+async function ensureMic() {
+  if (stream) return;
+  stream = await navigator.mediaDevices.getUserMedia({
+    audio: { channelCount: 1, echoCancellation: false, noiseSuppression: false, autoGainControl: false } });
+  const ctx = new AudioContext();
+  analyser = ctx.createAnalyser(); analyser.fftSize = 1024;
+  ctx.createMediaStreamSource(stream).connect(analyser);
+}
+
+function meter() {
+  const buf = new Float32Array(analyser.fftSize);
+  const tick = () => {
+    analyser.getFloatTimeDomainData(buf);
+    let peak = 0; for (const v of buf) peak = Math.max(peak, Math.abs(v));
+    $("lvl").style.width = Math.min(100, peak * 140) + "%";
+    $("lvl").style.background = peak > 0.97 ? "var(--rec)" : "var(--ok)";
+    raf = requestAnimationFrame(tick);
+  };
+  tick();
+}
+
+async function toggleRec() {
+  if (recording()) { recorder.stop(); return; }
+  try { await ensureMic(); } catch (e) { status("拿不到麥克風：" + e.message, "err"); return; }
+  chunks = [];
+  recorder = new MediaRecorder(stream);
+  recorder.ondataavailable = e => chunks.push(e.data);
+  recorder.onstop = finish;
+  recorder.start();
+  $("rec").classList.add("on"); $("rec").textContent = "■ 停止（空白鍵）";
+  status("錄音中…念完再按一次空白鍵");
+  meter();
+}
+
+async function finish() {
+  cancelAnimationFrame(raf); $("lvl").style.width = "0";
+  $("rec").classList.remove("on"); $("rec").textContent = "● 重錄（空白鍵）";
+  const it = items[idx];
+  try {
+    const raw = await new Blob(chunks).arrayBuffer();
+    const dec = await new AudioContext().decodeAudioData(raw);
+    const len = Math.ceil(dec.duration * 16000);
+    const off = new OfflineAudioContext(1, len, 16000);
+    const src = off.createBufferSource(); src.buffer = dec; src.connect(off.destination); src.start();
+    const pcm = (await off.startRendering()).getChannelData(0);
+    const check = qc(pcm);
+    const wav = toWav(pcm, 16000);
+    const k = key(it);
+    if (takes[k]) URL.revokeObjectURL(takes[k].url);
+    takes[k] = { blob: wav, url: URL.createObjectURL(wav), text: it.text };
+    await save(`${spk()}/${fname(it)}`, wav);
+    await saveTsv();
+    status(`已存 ${spk()}/${fname(it)}（${(pcm.length / 16000).toFixed(1)} 秒）${check.msg}`, check.cls);
+    render();
+  } catch (e) { status("轉檔或存檔失敗：" + e.message, "err"); }
+}
+
+function qc(x) {
+  let peak = 0, sum = 0; for (const v of x) { peak = Math.max(peak, Math.abs(v)); sum += v * v; }
+  const rms = Math.sqrt(sum / x.length), dur = x.length / 16000;
+  if (dur < 0.6) return { msg: "　⚠ 太短，可能沒錄到整句", cls: "warn" };
+  if (peak > 0.99) return { msg: "　⚠ 爆音了，離手機遠一點重錄", cls: "warn" };
+  if (rms < 0.005) return { msg: "　⚠ 太小聲，靠近一點重錄", cls: "warn" };
+  if (dur > 10) return { msg: "　⚠ 超過 10 秒，可能忘了停止", cls: "warn" };
+  return { msg: "　✓ 音量正常", cls: "ok" };
+}
+
+function toWav(f32, sr) {
+  const b = new ArrayBuffer(44 + f32.length * 2), v = new DataView(b);
+  const w = (o, s) => [...s].forEach((c, i) => v.setUint8(o + i, c.charCodeAt(0)));
+  w(0, "RIFF"); v.setUint32(4, 36 + f32.length * 2, true); w(8, "WAVE"); w(12, "fmt ");
+  v.setUint32(16, 16, true); v.setUint16(20, 1, true); v.setUint16(22, 1, true);
+  v.setUint32(24, sr, true); v.setUint32(28, sr * 2, true); v.setUint16(32, 2, true); v.setUint16(34, 16, true);
+  w(36, "data"); v.setUint32(40, f32.length * 2, true);
+  for (let i = 0; i < f32.length; i++) { const s = Math.max(-1, Math.min(1, f32[i])); v.setInt16(44 + i * 2, s < 0 ? s * 0x8000 : s * 0x7fff, true); }
+  return new Blob([b], { type: "audio/wav" });
+}
+
+async function save(path, blob) {
+  if (!dirHandle) { download(path.replace("/", "_"), blob); return; }
+  let d = dirHandle; const parts = path.split("/"); const name = parts.pop();
+  for (const p of parts) d = await d.getDirectoryHandle(p, { create: true });
+  const fh = await d.getFileHandle(name, { create: true });
+  const ws = await fh.createWritable(); await ws.write(blob); await ws.close();
+}
+
+async function saveTsv() {
+  const rows = Object.entries(takes).filter(([k]) => k.startsWith(spk() + "/")).sort()
+    .map(([k, t]) => `${k}\t${t.text}`);
+  const blob = new Blob(["path\tsentence\n" + rows.join("\n") + "\n"], { type: "text/tab-separated-values" });
+  if (dirHandle) await save(`${spk()}.tsv`, blob);
+}
+
+function download(name, blob) {
+  const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+}
+
+$("dir").onclick = async () => {
+  if (window.showDirectoryPicker) {
+    try { dirHandle = await window.showDirectoryPicker({ mode: "readwrite" }); }
+    catch { return; }
+    $("dirinfo").textContent = `儲存到「${dirHandle.name}」/${spk()}/`;
+  } else {
+    $("dirinfo").textContent = "這個瀏覽器不能選資料夾，錄完會逐檔下載（檔名 spk09_001.wav）";
+  }
+  $("rec").disabled = false; render(); status("準備好了，按空白鍵開始錄第一句");
+};
+$("rec").onclick = toggleRec;
+$("play").onclick = () => { const t = takes[key(items[idx])]; if (t) new Audio(t.url).play(); };
+$("prev").onclick = () => { if (!recording() && idx > 0) { idx--; render(); status(""); } };
+$("next").onclick = () => { if (!recording() && idx < items.length - 1) { idx++; render(); status(""); } };
+$("spk").onchange = $("env").onchange = render;
+$("src").onchange = () => { if ($("src").value === "file") $("tsv").click(); else { items = TEST; idx = 0; render(); } };
+$("tsv").onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const lines = (await f.text()).split(/\r?\n/).filter(Boolean);
+  const head = lines[0].split("\t"); const col = Math.max(0, head.indexOf("sentence"));
+  const body = head.includes("sentence") ? lines.slice(1) : lines;
+  items = body.map((l, i) => ({ no: i + 1, cat: "", text: l.split("\t")[col] })).filter(x => x.text);
+  idx = 0; render(); status(`已載入 ${items.length} 句`);
+};
+document.addEventListener("keydown", e => {
+  if (e.target.tagName === "INPUT" || e.target.tagName === "SELECT" || $("rec").disabled) return;
+  if (e.code === "Space") { e.preventDefault(); toggleRec(); }
+  else if (e.code === "ArrowRight") $("next").click();
+  else if (e.code === "ArrowLeft") $("prev").click();
+  else if (e.code === "KeyP") $("play").click();
+});
+render();
+</script>
+</body>
+</html>

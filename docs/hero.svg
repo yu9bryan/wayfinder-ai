@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 360" width="1240" height="360"
+     font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Hiragino Sans GB, sans-serif">
+<defs>
+  <marker id="hA" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#E3F2FD"/></marker>
+  <clipPath id="hClip"><rect width="1240" height="360" rx="12"/></clipPath>
+</defs>
+
+<g clip-path="url(#hClip)">
+  <rect width="1240" height="360" fill="#0D47A1"/>
+  <g stroke="#2196F3" stroke-opacity="0.16" stroke-width="1">
+    <line x1="0" y1="60"  x2="1240" y2="60"/>
+    <line x1="0" y1="120" x2="1240" y2="120"/>
+    <line x1="0" y1="180" x2="1240" y2="180"/>
+    <line x1="0" y1="240" x2="1240" y2="240"/>
+    <line x1="0" y1="300" x2="1240" y2="300"/>
+  </g>
+
+  <!-- 右側：斑馬線母題 -->
+  <g opacity="0.95">
+    <g transform="rotate(-20 985 165)">
+      <rect x="902" y="100" width="22" height="130" fill="#1A5BBD"/>
+      <rect x="938" y="100" width="22" height="130" fill="#1A5BBD"/>
+      <rect x="974" y="100" width="22" height="130" fill="#2F6FC4"/>
+      <rect x="1010" y="100" width="22" height="130" fill="#1A5BBD"/>
+      <rect x="1046" y="100" width="22" height="130" fill="#1A5BBD"/>
+      <g fill="none" stroke="#90CAF9" stroke-width="2.2">
+        <rect x="971" y="96" width="28" height="138"/>
+        <rect x="1007" y="96" width="28" height="138"/>
+      </g>
+    </g>
+    <line x1="985" y1="262" x2="927" y2="103" stroke="#E3F2FD" stroke-width="3" marker-end="url(#hA)"/>
+    <circle cx="985" cy="262" r="4.5" fill="#E3F2FD"/>
+  </g>
+
+  <!-- 左側：標題 -->
+  <text x="72" y="118" font-size="52" font-weight="700" fill="#FFFFFF" letter-spacing="-0.5">Wayfinder AI</text>
+  <text x="72" y="158" font-size="20" fill="#90CAF9">輕量化端側多模態視障輔助系統</text>
+  <text x="72" y="184" font-size="13" fill="#5E95C8">Lightweight On-Device Multimodal Assistive System for People with Visual Impairments</text>
+
+  <rect x="72" y="232" width="230" height="74" rx="6" fill="#1A5BBD"/>
+  <text x="92" y="262" font-size="15" font-weight="700" fill="#FFFFFF">路口方向</text>
+  <text x="92" y="284" font-size="12" fill="#A9CEF2">旋轉框逐條偵測漆線，輸出穿越軸</text>
+
+  <rect x="322" y="232" width="230" height="74" rx="6" fill="#1A5BBD"/>
+  <text x="342" y="262" font-size="15" font-weight="700" fill="#FFFFFF">母語語音</text>
+  <text x="342" y="284" font-size="12" fill="#A9CEF2">國、台、客語短指令，受限路由</text>
+
+  <rect x="572" y="232" width="230" height="74" rx="6" fill="#1A5BBD"/>
+  <text x="592" y="262" font-size="15" font-weight="700" fill="#FFFFFF">離線尋物</text>
+  <text x="592" y="284" font-size="12" fill="#A9CEF2">語音登錄個人物品，無須重新訓練</text>
+</g>
+</svg>

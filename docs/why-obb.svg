@@ -1,0 +1,156 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1240 840" width="1240" height="840"
+     font-family="Noto Sans TC, PingFang TC, Microsoft JhengHei, Hiragino Sans GB, sans-serif">
+<defs>
+  <marker id="aD" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#0D47A1"/></marker>
+  <marker id="aL" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+    <path d="M0,0 L10,5 L0,10 z" fill="#90CAF9"/></marker>
+</defs>
+<style>
+  .h   { font-size:27px; font-weight:700; fill:#0D47A1 }
+  .sb  { font-size:15.5px; fill:#7A8FA3 }
+  .s2  { font-size:18px; font-weight:700; fill:#0D47A1 }
+  .bt  { font-size:14px; fill:#1A2A3A }
+  .bs  { font-size:12.5px; fill:#7A8FA3 }
+  .cap { font-size:14.5px; font-weight:700; fill:#0D47A1 }
+  .halo{ paint-order:stroke; stroke:#FFFFFF; stroke-width:4.5px; stroke-linejoin:round }
+</style>
+
+<rect width="1240" height="840" fill="#FFFFFF"/>
+
+<text x="40" y="48" class="h">為什麼用旋轉框（OBB）偵測斑馬線</text>
+<text x="40" y="79" class="sb">水平框只回報物件存在。斑馬線的朝向決定使用者該往哪走，這個資訊水平框表達不了。</text>
+<line x1="40" y1="97" x2="1200" y2="97" stroke="#D6E4F0" stroke-width="1.5"/>
+
+<!-- 左：AABB -->
+<rect x="40" y="118" width="560" height="452" rx="10" fill="#FFFFFF" stroke="#D6E4F0" stroke-width="1.5"/>
+<rect x="68" y="142" width="124" height="28" rx="4" fill="#F2F6FA"/>
+<text x="82" y="161" font-size="14.5" font-weight="700" fill="#7A8FA3">水平框 AABB</text>
+
+<rect x="68" y="196" width="304" height="268" rx="6" fill="#E3F2FD"/>
+<g transform="rotate(-20 220 330)">
+  <rect x="101" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="153" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="205" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="257" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="309" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+</g>
+<rect x="81" y="214" width="278" height="232" fill="#90CAF9" fill-opacity="0.18"
+      stroke="#90CAF9" stroke-width="2.5" stroke-dasharray="7 4"/>
+<text x="84" y="207" font-size="12.5" font-weight="600" fill="#5E95C8">crosswalk  0.91</text>
+<line x1="220" y1="452" x2="220" y2="212" stroke="#90CAF9" stroke-width="2.5"
+      stroke-dasharray="6 5" marker-end="url(#aL)"/>
+<text x="228" y="449" font-size="12" fill="#5E95C8" class="halo">使用者朝向</text>
+
+<rect x="400" y="226" width="3" height="40" fill="#CFE3F5"/>
+<text x="418" y="240" class="bt">角度資訊被丟棄</text>
+<text x="418" y="261" class="bs">框永遠是正的</text>
+<rect x="400" y="288" width="3" height="40" fill="#CFE3F5"/>
+<text x="418" y="302" class="bt">框內逾半不是漆線</text>
+<text x="418" y="323" class="bs">傾斜越大，雜訊越多</text>
+<rect x="400" y="350" width="3" height="40" fill="#CFE3F5"/>
+<text x="418" y="364" class="bt">無法判斷偏航</text>
+<text x="418" y="385" class="bs">只剩「有／沒有」</text>
+
+<rect x="400" y="406" width="176" height="46" rx="6" fill="#F2F6FA" stroke="#DCE7F2"/>
+<text x="488" y="425" font-size="11.5" fill="#9AADBF" text-anchor="middle">可輸出的提示</text>
+<text x="488" y="444" font-size="14.5" font-weight="700" fill="#7A8FA3" text-anchor="middle">「前方有斑馬線」</text>
+
+<rect x="68" y="490" width="508" height="44" rx="6" fill="#FAFCFE" stroke="#E6EEF6"/>
+<text x="86" y="517" font-size="12" fill="#9AADBF">逐條角度</text>
+<text x="146" y="517" font-size="13" fill="#7A8FA3">水平框沒有「角度」這個輸出欄位</text>
+
+<!-- 右：OBB -->
+<rect x="640" y="118" width="560" height="452" rx="10" fill="#FFFFFF" stroke="#90CAF9" stroke-width="1.8"/>
+<rect x="668" y="142" width="162" height="28" rx="4" fill="#E3F2FD"/>
+<text x="682" y="161" font-size="14.5" font-weight="700" fill="#0D47A1">旋轉框 OBB · 逐條標註</text>
+
+<rect x="668" y="196" width="304" height="268" rx="6" fill="#E3F2FD"/>
+<g transform="rotate(-20 820 330)">
+  <rect x="701" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="753" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="805" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="857" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <rect x="909" y="250" width="30" height="160" fill="#FCFDFE" stroke="#C5DFF7"/>
+  <g fill="none" stroke="#2196F3" stroke-width="2.6">
+    <rect x="698" y="246" width="36" height="168"/>
+    <rect x="750" y="246" width="36" height="168"/>
+    <rect x="802" y="246" width="36" height="168"/>
+    <rect x="854" y="246" width="36" height="168"/>
+    <rect x="906" y="246" width="36" height="168"/>
+  </g>
+</g>
+
+<line x1="820" y1="455" x2="820" y2="212" stroke="#90CAF9" stroke-width="2.5"
+      stroke-dasharray="6 5" marker-end="url(#aL)"/>
+<line x1="820" y1="455" x2="736" y2="225" stroke="#0D47A1" stroke-width="3.4" marker-end="url(#aD)"/>
+<circle cx="820" cy="455" r="4.5" fill="#0D47A1"/>
+<path d="M 820 305 A 150 150 0 0 0 768.7 314" fill="none" stroke="#0D47A1" stroke-width="2"/>
+<text x="786" y="300" font-size="13.5" font-weight="700" fill="#0D47A1" class="halo" text-anchor="middle">20°</text>
+<text x="830" y="449" font-size="12" fill="#5E95C8" class="halo">朝向</text>
+<text x="698" y="243" font-size="12" font-weight="700" fill="#0D47A1" class="halo">穿越軸</text>
+
+<rect x="1000" y="226" width="3" height="40" fill="#2196F3"/>
+<text x="1018" y="240" class="bt">每條漆線各帶角度</text>
+<text x="1018" y="261" class="bs">軸向循環平均融合</text>
+<rect x="1000" y="288" width="3" height="40" fill="#2196F3"/>
+<text x="1018" y="302" class="bt">多條互為冗餘觀測</text>
+<text x="1018" y="323" class="bs">可彼此檢查一致性</text>
+<rect x="1000" y="350" width="3" height="40" fill="#2196F3"/>
+<text x="1018" y="364" class="bt">偏航量可量化</text>
+<text x="1018" y="385" class="bs">再經時間中位數與遲滯</text>
+
+<rect x="1000" y="406" width="176" height="46" rx="6" fill="#E3F2FD" stroke="#90CAF9"/>
+<text x="1088" y="425" font-size="11.5" fill="#5E95C8" text-anchor="middle">可輸出的提示</text>
+<text x="1088" y="444" font-size="14.5" font-weight="700" fill="#0D47A1" text-anchor="middle">「向左微調」</text>
+
+<rect x="668" y="490" width="508" height="44" rx="6" fill="#F5FAFE" stroke="#CFE3F5"/>
+<text x="686" y="517" font-size="12" fill="#5E95C8">逐條角度</text>
+<g font-size="13" font-weight="700" fill="#2196F3" text-anchor="middle">
+  <text x="762" y="517">18.4°</text>
+  <text x="812" y="517">20.8°</text>
+  <text x="862" y="517">19.9°</text>
+  <text x="912" y="517">20.3°</text>
+  <text x="962" y="517">19.6°</text>
+</g>
+<line x1="1000" y1="500" x2="1000" y2="524" stroke="#CFE3F5" stroke-width="1.5"/>
+<text x="1014" y="517" font-size="12" fill="#5E95C8">循環平均</text>
+<text x="1080" y="518" font-size="16" font-weight="700" fill="#0D47A1">20.0°</text>
+
+<!-- 下：冗餘 -->
+<text x="40" y="622" class="s2">為什麼是「每條漆線一個框」，而不是整組一個框</text>
+<text x="40" y="647" font-size="14" fill="#7A8FA3">多條漆線互為冗餘觀測。整組只有一個框時，任何一處遮擋都會汙染唯一的那個角度估計。</text>
+
+<rect x="40" y="668" width="373" height="138" rx="10" fill="#FFFFFF" stroke="#D6E4F0"/>
+<g transform="rotate(-20 112 737)">
+  <rect x="80"  y="706" width="13" height="62" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.8"/>
+  <rect x="100" y="706" width="13" height="62" fill="#EEF2F6" stroke="#CBD6E0" stroke-width="1.5"/>
+  <rect x="120" y="706" width="13" height="62" fill="#EEF2F6" stroke="#CBD6E0" stroke-width="1.5"/>
+  <rect x="140" y="706" width="13" height="62" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.8"/>
+</g>
+<text x="196" y="708" class="cap">部分遮擋</text>
+<text x="196" y="732" class="bs">兩條被車輛擋住</text>
+<text x="196" y="768" font-size="12.5" fill="#2196F3" font-weight="700">其餘 2 條仍可定軸</text>
+
+<rect x="433" y="668" width="373" height="138" rx="10" fill="#FFFFFF" stroke="#D6E4F0"/>
+<g transform="rotate(-20 505 737)">
+  <rect x="473" y="706" width="13" height="62" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.8"/>
+  <rect x="493" y="706" width="13" height="62" fill="#FFFFFF" stroke="#CBD6E0" stroke-width="1.5" stroke-dasharray="3 3"/>
+  <rect x="513" y="706" width="13" height="62" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.8"/>
+  <rect x="533" y="706" width="13" height="62" fill="#E3F2FD" stroke="#2196F3" stroke-width="1.8"/>
+</g>
+<text x="589" y="708" class="cap">漆線磨損</text>
+<text x="589" y="732" class="bs">邊界模糊、角度不穩</text>
+<text x="589" y="768" font-size="12.5" fill="#2196F3" font-weight="700">以其餘漆線互相檢查</text>
+
+<rect x="826" y="668" width="374" height="138" rx="10" fill="#FAFCFE" stroke="#90CAF9" stroke-dasharray="6 4"/>
+<g transform="rotate(-20 898 737)">
+  <rect x="866" y="706" width="13" height="62" fill="#E3F2FD" stroke="#90CAF9" stroke-width="1.8"/>
+  <rect x="886" y="706" width="13" height="62" fill="#EEF2F6" stroke="#CBD6E0" stroke-width="1.5"/>
+  <rect x="906" y="706" width="13" height="62" fill="#EEF2F6" stroke="#CBD6E0" stroke-width="1.5"/>
+  <rect x="926" y="706" width="13" height="62" fill="#EEF2F6" stroke="#CBD6E0" stroke-width="1.5"/>
+</g>
+<text x="982" y="708" class="cap">僅剩 1 條</text>
+<text x="982" y="732" class="bs">無冗餘可用，無從檢查</text>
+<text x="982" y="768" font-size="12.5" fill="#0D47A1" font-weight="700">信心下降，系統降級不輸出</text>
+</svg>

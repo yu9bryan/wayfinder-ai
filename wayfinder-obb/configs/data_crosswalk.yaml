@@ -1,0 +1,7 @@
+# 斑馬線漆線資料集（Ultralytics OBB 格式）。資料集未隨倉庫釋出，請依 docs/annotation_spec.md 自行準備。
+path: datasets/crosswalk_obb
+train: train/images
+val: val/images
+test: test/images
+names:
+  0: zebra_stripe

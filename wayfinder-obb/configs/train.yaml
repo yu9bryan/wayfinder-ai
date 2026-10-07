@@ -1,0 +1,35 @@
+# 三個釋出模型的訓練設定（training/train.py 讀這個檔）
+# 未列出的超參數皆為 Ultralytics 8.4.38 預設值；optimizer 為 auto。
+
+crosswalk_obb_640:
+  cfg: configs/crosswalk_obb_640.yaml
+  data: configs/data_crosswalk.yaml
+  task: obb
+  imgsz: 640
+  epochs: 60
+  batch: 96
+  lr0: 0.01
+  cos_lr: true
+  seed: 0
+
+crosswalk_obb_320:
+  cfg: configs/crosswalk_obb_320.yaml
+  data: configs/data_crosswalk.yaml
+  task: obb
+  imgsz: 320
+  epochs: 60
+  batch: 96
+  lr0: 0.01
+  cos_lr: true
+  seed: 0
+
+traffic_light_640:
+  cfg: configs/traffic_light_640.yaml
+  data: configs/data_traffic_light.yaml
+  task: detect
+  imgsz: 640
+  epochs: 90
+  batch: 96
+  lr0: 0.01
+  cos_lr: true
+  seed: 0
